@@ -1,0 +1,15 @@
+service: aws-node-project
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  environment:
+    MORALIS_API_KEY: '27Y4Ztix3JltJ8XVvlhsT4TAlcM0Qv9SkbQZ5IvPsc2ZrbiO2EUF4HQMiRKfVJRl'
+
+functions:
+  getNativeBalance:
+    handler: functions/getNativeBalance.handler
+  getWalletNfts:
+    handler: functions/getWalletNfts.handler
