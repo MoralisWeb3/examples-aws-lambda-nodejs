@@ -4,7 +4,7 @@ const { EvmChain } = require("@moralisweb3/evm-utils")
 
 const MORALIS_API_KEY = "replace me";
 const address = "replace me";
-const chain = EvmChain.MUMBAI;
+const chain = EvmChain.ETHEREUM;
 
 const startMoralis = async () => {
   await Moralis.start({
