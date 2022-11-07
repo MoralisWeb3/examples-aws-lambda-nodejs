@@ -1,10 +1,7 @@
 'use strict';
 const Moralis = require('moralis').default;
-const { EvmChain } = require("@moralisweb3/evm-utils")
 
 const MORALIS_API_KEY = "replace me";
-const address = "replace me";
-const chain = EvmChain.ETHEREUM;
 
 const startMoralis = async () => {
   await Moralis.start({
@@ -15,11 +12,10 @@ const startMoralis = async () => {
 startMoralis();
 
 module.exports.handler = async (event) => {
-  
   // Get native balance
   const nativeBalance = await Moralis.EvmApi.balance.getNativeBalance({
-    address,
-    chain,
+    address: event.address,
+    chain: event.chain
   });
 
   // Format the native balance formatted in ether via the .ether getter
@@ -27,5 +23,5 @@ module.exports.handler = async (event) => {
   
   return {
     result: nativeBalanceEther
-  };
+  }
 };
