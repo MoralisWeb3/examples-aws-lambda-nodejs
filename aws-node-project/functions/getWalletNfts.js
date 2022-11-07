@@ -22,6 +22,6 @@ module.exports.handler = async (event) => {
   });
 
   return {
-    result: nfts
+    result: JSON.stringify(nfts)
   }
 };
