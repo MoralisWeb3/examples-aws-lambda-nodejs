@@ -1,11 +1,9 @@
 'use strict';
 const Moralis = require('moralis').default;
 
-const MORALIS_API_KEY = "replace me";
-
 const startMoralis = async () => {
   await Moralis.start({
-    apiKey: MORALIS_API_KEY,
+    apiKey: process.env.MORALIS_API_KEY,
   });
 };
 
