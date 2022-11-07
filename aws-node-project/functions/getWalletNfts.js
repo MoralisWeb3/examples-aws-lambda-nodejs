@@ -13,7 +13,8 @@ module.exports.handler = async (event) => {
   // Get wallet NFTs
   const nfts = await Moralis.EvmApi.nft.getWalletNFTs({
     address: event.address,
-    chain: event.chain
+    chain: event.chain,
+    limit: 10
   });
 
   return {
