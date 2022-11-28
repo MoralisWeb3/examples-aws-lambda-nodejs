@@ -1,17 +1,21 @@
 const serverless = require("serverless-http");
 const express = require("express");
+const bodyParser = require('body-parser');
 const Moralis = require('moralis').default;
-const { EvmChain } = require("@moralisweb3/evm-utils")
+const { EvmChain } = require("@moralisweb3/evm-utils");
 
 const app = express();
 
-const MORALIS_API_KEY = "replace me";
-const address = "replace me";
-const chain = EvmChain.ETHEREUM;
+// Accept all type of request body format
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
+app.use(bodyParser.text());
+app.use(bodyParser.urlencoded({ extended: true }));
 
+// Start Moralis
 const startMoralis = async () => {
   await Moralis.start({
-    apiKey: MORALIS_API_KEY,
+    apiKey: process.env.MORALIS_API_KEY,
   });
 };
 
@@ -23,12 +27,12 @@ app.get("/", (req, res, next) => {
   });
 });
 
-app.get("/getNativeBalance", async (req, res, next) => {
+app.get("/getNativeBalance/:address/:chain", async (req, res, next) => {
   try {
     // Get native balance
     const nativeBalance = await Moralis.EvmApi.balance.getNativeBalance({
-      address,
-      chain,
+      address: req.params.address,
+      chain: req.params.chain,
     });
 
     // Format the native balance formatted in ether via the .ether getter
@@ -45,12 +49,13 @@ app.get("/getNativeBalance", async (req, res, next) => {
   }
 });
 
-app.get("/getWalletNfts", async (req, res, next) => {
+app.post("/getWalletNfts", async (req, res, next) => {
   try {
+
     // Get wallet NFTs
     const nfts = await Moralis.EvmApi.nft.getWalletNFTs({
-      address,
-      chain,
+      address: req.body.address,
+      chain: req.body.chain,
     });
 
     res.status(200);
