@@ -2,7 +2,6 @@ const serverless = require("serverless-http");
 const express = require("express");
 const bodyParser = require('body-parser');
 const Moralis = require('moralis').default;
-const { EvmChain } = require("@moralisweb3/evm-utils");
 
 const app = express();
 
@@ -27,19 +26,19 @@ app.get("/", (req, res, next) => {
   });
 });
 
-app.get("/getNativeBalance/:address/:chain", async (req, res, next) => {
+app.post("/getNativeBalance", async (req, res, next) => {
   try {
     // Get native balance
     const nativeBalance = await Moralis.EvmApi.balance.getNativeBalance({
-      address: req.params.address,
-      chain: req.params.chain,
+      address: req.body.address,
+      chain: req.body.chain,
     });
 
     // Format the native balance formatted in ether via the .ether getter
     const nativeBalanceEther = nativeBalance.result.balance.ether;
 
     res.status(200);
-    res.json(nativeBalanceEther);
+    res.send(nativeBalanceEther);
 
   } catch (error) {
     // Handle errors
@@ -56,6 +55,7 @@ app.post("/getWalletNfts", async (req, res, next) => {
     const nfts = await Moralis.EvmApi.nft.getWalletNFTs({
       address: req.body.address,
       chain: req.body.chain,
+      limit: 10,
     });
 
     res.status(200);
