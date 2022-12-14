@@ -26,7 +26,7 @@ app.get("/", (req, res, next) => {
   });
 });
 
-app.post("/getNativeBalance", async (req, res, next) => {
+app.get("/getNativeBalance", async (req, res, next) => {
   try {
     // Get native balance
     const nativeBalance = await Moralis.EvmApi.balance.getNativeBalance({
@@ -48,7 +48,7 @@ app.post("/getNativeBalance", async (req, res, next) => {
   }
 });
 
-app.post("/getWalletNfts", async (req, res, next) => {
+app.get("/getWalletNfts", async (req, res, next) => {
   try {
 
     // Get wallet NFTs
